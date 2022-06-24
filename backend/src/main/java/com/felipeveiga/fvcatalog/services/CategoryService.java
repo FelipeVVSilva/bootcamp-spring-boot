@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.felipeveiga.fvcatalog.entities.Category;
 import com.felipeveiga.fvcatalog.entities.dto.CategoryDTO;
 import com.felipeveiga.fvcatalog.repositories.CategoryRepository;
+import com.felipeveiga.fvcatalog.services.exceptions.ObjectNotFoundException;
 
 @Service
 public class CategoryService {
@@ -27,7 +28,7 @@ public class CategoryService {
 	@Transactional(readOnly = true)
 	public CategoryDTO findById(Long id) {
 		Optional<Category> obj = repo.findById(id);
-		Category entity = obj.get();
+		Category entity = obj.orElseThrow(() -> new ObjectNotFoundException("Id not exist: " + id));
 		return new CategoryDTO(entity);
 	}
 	
