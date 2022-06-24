@@ -5,6 +5,8 @@ import java.util.Optional;
 import javax.persistence.EntityNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -13,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.felipeveiga.fvcatalog.entities.Category;
 import com.felipeveiga.fvcatalog.entities.dto.CategoryDTO;
 import com.felipeveiga.fvcatalog.repositories.CategoryRepository;
+import com.felipeveiga.fvcatalog.services.exceptions.DatabaseException;
 import com.felipeveiga.fvcatalog.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -52,6 +55,20 @@ public class CategoryService {
 		}
 		catch(EntityNotFoundException e) {
 			throw new ObjectNotFoundException("Id not exist: " + id);
+		}
+		
+	}
+	
+	@Transactional
+	public void delete(Long id) {
+		try {
+			repo.deleteById(id);
+		}
+		catch(EmptyResultDataAccessException e) {
+			throw new ObjectNotFoundException("Id not exist: " + id);
+		}
+		catch(DataIntegrityViolationException e) {
+			throw new DatabaseException("Integrity violation");
 		}
 		
 	}
