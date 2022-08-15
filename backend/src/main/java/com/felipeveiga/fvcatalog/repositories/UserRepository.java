@@ -12,7 +12,7 @@ import com.felipeveiga.fvcatalog.entities.User;
 public interface UserRepository extends JpaRepository<User, Long>{
 
 	@Transactional(readOnly = true)
-	@Query(value = "select email from tb_user where email = :email", nativeQuery = true)
-	String findByEmail(@Param("email") String email);
+	@Query(value = "select * from tb_user where email = :email", nativeQuery = true)
+	User findByEmail(@Param("email") String email);
 	
 }

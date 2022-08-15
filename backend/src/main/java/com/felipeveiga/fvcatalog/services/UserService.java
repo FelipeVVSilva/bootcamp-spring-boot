@@ -18,6 +18,7 @@ import com.felipeveiga.fvcatalog.entities.User;
 import com.felipeveiga.fvcatalog.entities.dto.RoleDTO;
 import com.felipeveiga.fvcatalog.entities.dto.UserDTO;
 import com.felipeveiga.fvcatalog.entities.dto.UserInsertDTO;
+import com.felipeveiga.fvcatalog.entities.dto.UserUpdateDTO;
 import com.felipeveiga.fvcatalog.repositories.RoleRepository;
 import com.felipeveiga.fvcatalog.repositories.UserRepository;
 import com.felipeveiga.fvcatalog.services.exceptions.DatabaseException;
@@ -56,7 +57,7 @@ public class UserService {
 	}
 	
 	@Transactional
-	public UserDTO update(Long id, UserDTO dto) {
+	public UserDTO update(Long id, UserUpdateDTO dto) {
 		try {
 			User entity = repo.getOne(id);
 			copyDtoToEntity(dto, entity);
