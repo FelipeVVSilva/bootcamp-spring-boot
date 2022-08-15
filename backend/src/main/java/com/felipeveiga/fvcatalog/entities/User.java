@@ -30,6 +30,8 @@ public class User implements Serializable{
 	
 	@Column(name = "lastname")
 	private String lastName;
+	
+	@Column(unique = true)
 	private String email;
 	private String password;
 	
